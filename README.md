@@ -120,6 +120,9 @@ init.py파일의 150번째 줄에 크롬 드라이버 위치 수정
 
 https://novice-engineers.tistory.com/9?category=908185
 
+## 카카오 쳇봇
+https://luckygg.tistory.com/294
+
 
 ## 개발기간
 
