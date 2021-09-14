@@ -1,10 +1,4 @@
-2cfcef6a59cfb96e207837bb99b11005
 https://kauth.kakao.com/oauth/authorize?client_id=2cfcef6a59cfb96e207837bb99b11005&redirect_uri=https://example.com/oauth&response_type=code
-https://example.com/oauth?code=gmk994jF208RQzmBfWJLzSM0IU-wV4q4PvdpfLGpGqawaxchhjh3lrdCpQyu_0nZTBGovQo9dBEAAAF7uJ4gvg
-
-z0UAkc9IG-ryv894d8pKZUOHT7iWT7Gol03AvyqGy5Vx3LXjjHhbNWs5XPRTvGq2ZEpzhwopcJ4AAAF7uLFd0Q
-
-토큰:VRY5AD0Sy-0b5x1BJjqGevHpaUvVWkfEyiEjYwopyWAAAAF7uLHmgw
 
  https://kapi.kakao.com/v2/api/talk/memo/default/send
 
