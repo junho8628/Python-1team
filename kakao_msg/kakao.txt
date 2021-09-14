@@ -1,8 +1,8 @@
 # 나에게 보낼때
 https://kauth.kakao.com/oauth/authorize?client_id=2cfcef6a59cfb96e207837bb99b11005&redirect_uri=https://example.com/oauth&response_type=code
 
- https://kapi.kakao.com/v2/api/talk/memo/default/send
 
 # 친구에게 보낼때
 https://kauth.kakao.com/oauth/authorize?client_id=2cfcef6a59cfb96e207837bb99b11005&redirect_uri=https://example.com/oauth&response_type=code&scope=talk_message,friends
 
+https://kapi.kakao.com/v2/api/talk/memo/default/send
