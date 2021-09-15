@@ -1,0 +1,48 @@
+sqlite3 실행 (접속한 db가 없음)
+    ./sqlite3
+
+데이터베이스 생성 (해당 db가 존재하면 접속, 없으면 생성과 동시에 접속
+    ./sqlite3 [DB이름.db] 
+
+테이블 생성
+    create table [테이블이름] (컬럼명1 데이터타입, 컬럼명2 데이터타입, ...);
+    ex) create table crawling (TransSeq integer PRIMARY KEY, FromSaupjaRegNo text, ...);
+
+테이블 삭제 
+    drop table [테이블 이름]
+    ex) drop table crawling;
+
+테이블 목록 확인
+    .tables
+
+테이블 목록과 내부 데이터 확인
+    .schema
+
+데이터 조회
+    select * from [테이블이름] --> 전체 데이터 조회합니다
+    select [컬럼명1, 컬럼명2, ....] from [테이블이름]; --> 입력한 컬럼의 데이터만 조회합니다
+    select [컬럼명1, 컬럼명2, ....] from [테이블이름] order by [컬럼명] ASC or Desc; --> 데이터를 ASC(오름차순) DESC (내림차순으로 조회)
+    select [컬럼명1, 컬럼명2, ....] from [테이블이름] where 컬럼명1 > 10; --> where문으로 조건을 걸어 데이터 필터링도 가능합니다
+
+데이터 삽입 
+    insert into [테이블이름] values (컬럼1, 컬럼2, ...);
+    ex) insert into crawling values (1,'사업장번호');
+        해당 방법은 테이블 생성시의 컬럼 순서대로 데이터가 저장됩니다.
+
+    insert into [테이블이름] (컬럼명1, 컬럼명2, ...) values (값1, 값2, ...);
+    ex) insert into crawling (TransSeq,FromSaupjaRegNo) values (1,'사업장번호');
+        위와 같이 원하는 컬럼의 데이터만 넣는것도 가능합니다.
+
+데이터 삭제 
+    delete from [테이블이름]; --> 해당 테이블의 모든 데이터 삭제
+    delete from [테이블이름] where [삭제할 데이터의 조건];
+    ex) delete from crawling where TransSeq < 10;
+         TransSeq가 10 미만인 데이터 삭제
+
+데이터 수정 
+    update [테이블이름] set [컬럼명1] = [값1] , [컬럼명2] = [값2], ... where조건식;
+    ex) update crawling set TransSeq = 10, FromSaupjaRegNo = '사업장주소' where TransSeq = 1;
+        위 쿼리문은 TransSeq가 1인 데이터의 TransSeq를 10으로 FromSaupjaRegNo를 사업장주소로 변경하는 쿼리문입니다.
+
+이 외에도 필요한 쿼리문 또는 문법이 있을경우 카카오톡으로 물어보면 추가 및 수정 조치하겠습니다.
+

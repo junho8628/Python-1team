@@ -1,0 +1,153 @@
+app = Flask(__name__) --> 모듈을 Flask로 인식시킴
+
+플라스크 실행 (조건: 위 코드가 코드 내 존재해야함)
+if __name__=="__main__":
+    app.run(debug=True)
+
+flask와 DB 연동
+
+1. db 연결
+app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///[DB이름.db]'   ---- sqlite3
+app.config["SQLALCHEMY_DATABASE_URI"] = "mariadb+mariadbconnector://[유저명]:[비밀번호]@[ip 또는 주소]:[포트번호]/main?charset=utf8" --- MariaDB
+
+2. table 연결
+db = SQLAlchemy(app) --> flask와 sqlalchemy를 서로 연결
+
+class [테이블이름](db.Model):
+    __tablename__= [테이블이름]
+    [컬럼명1] = db.Column(db.[데이터타입],primary_key=True)  --> PK가 설정된 행일 경우
+    [컬럼명2] = db.Column(db.Integer) --> 데이터타입이 Int형인 경우
+    [컬럼명3] = db.Column(db.String(10)) --> 데이터타입이 String(text)이고 길이가 10인 경우
+    [컬럼명4] = db.Column(db.DateTime(timezone=True)) --> 데이터 타입이 날짜인 경우
+    def __init__ (self,[컬럼명1],[컬럼명2][컬럼명3],[컬럼명4]):
+        self.[컬럼명1]=[컬럼명1]
+        self.[컬럼명2]=[컬럼명2]
+        self.[컬럼명3]=[컬럼명3]
+        self.[컬럼명4]=[컬럼명4]
+
+3. 127.0.0.1/[주소] 설정하기
+@app.route("/")  --> 기본 메인화면
+def index():
+    [해당 페이지에서 작동할 코드]
+
+@app.route("/crawling") --> url이 127.0.0.1/crawling 일 경우 실행
+def crapping():
+    [해당 페이지에서 작동할 코드]
+    
+3-1 method GET과 POST로 flask에 값 넘겨주기
+@app.route("/[URL], methods =['GET','POST])
+def [함수명]():  
+    [해당 페이지에서 작동할 코드]
+    
+GET이란?
+    ● GET은 주소줄에 데이터 값이 ?뒤에 쌍으로 이어붙어서 전달됩니다.. ex) http://[url]/?num=123
+    ● 게시판의 글 리스트 또는 글 보기 기능 등 (서버의 데이터를 변경하는 용도로는 사용 안하는 편)
+
+POST란?
+    ● POST는 데이터 값이 숨겨져서 넘어갑니다 (사용자에게 보이지 않음). form 태그를 이용하여 안에 있는 값을 넘겨 flask의 경우 request로 받아 사용합니다.
+    ● json의 ajax 문법을 사용한다면 form태그 없이 버튼 클릭으로도 데이터를 넘길 수 있습니다. (json ajax 관련 자료는 추후 필요시 설명문 작성하겠습니다.)
+    ● POST는 서버의 값이나 상태를 바꾸기 위해서 사용합니다. (서버의 데이터를 변경할때 주로 사용) ex) 글 작성, 글 수정 등등 실제 변경되는 값
+
+3-2 request로 flask에서 값 받기
+    ※GET에서 ex)로 쓴 문장을 예제로 들고 진행하겠습니다.
+    ● [변수] = reuqest.args=["num"] --> 변수에 ?num=123으로 넘긴 데이터, 즉 123이 들어갑니다. 
+
+    ※POST 방식은 <form action="/[URL]" name="[name]" method="POST"> <input type="text" name ="num" value="POST입니다."> </form> 이라는 태그를 전제하에 두고 진행하겠습니다.
+    ● [변수] = request.form["num"] --> 변수에 name 속성의 값이 num인것의 값을 넣어줍니다. 즉 POST입니다. 라는 데이터가 변수에 들어갑니다.
+    ● 이 방법 또한 input 또는 값이 여러개면 그만큼 request.form을 만들어 여러개를 넘겨주고 받을 수 있습니다.
+ 
+4. SQLAlchemy로 DB 데이터 제어하기
+
+4-1. select 문법 및 예제
+    [변수] = [테이블명].query.all() --> select * from [테이블 명]
+    ex) all_data = tblErpTaxBillTrans.query.all() --> 모든값 가져옴
+         all_data = tblErpTaxBillTrans.query.first() --> 첫번째 값만 가져옴
+         all_data = tblErpTaxBillTrans.query.last() --> 마지막 값만 가져옴
+         
+4-2. where 문법 및 예제
+    [변수] = [테이블명].query.filter([테이블명].[컬럼명] >=10).all() --> select * from [테이블 명]
+    ex) ApprNoData=tblErpTaxBillTrans.query.filter(tblErpTaxBillTrans.HomeTaxApprNo==12345).first()
+        --> tblErpTaxBillTrans테이블의 HomeTaxApprNo가 12345인 데이터 1개만 가지고 온다.
+        log_data = tblsignup.query.filter(and_(tblsignup.UserEmail==Userid),(tblsignup.UserPassword==Userpass)).first()
+        --> 이런식으로 and 조건도 사용가능. or 조건도 or_(tblsignup.UserEmail==Userid),(tblsignup.UserPassword==Userpass)로 사용가능
+        
+4-3. insert 문법 및 예제
+    [변수] = [테이블명](테이블컬럼1 값, 테이블컬럼2 값)
+    db.session.add([변수]) --> DB에 해당 데이터 추가
+    db.session.commit()  --> 모든 DB작업은 commit을 해줘야 실제 DB에 적용됌. commit안하면 실제 적용 X
+
+    ex) ※ 테이블 이름이 crawling이고 컬럼이 TransSeq와 FromSaupjaRegNo 있다는 가정하에 진행하겠습니다.
+        data = crawling(1,'사업장번호') / db.session.add(data) / db.session.commit()  --> 이렇게하면 1과 사업장번호라는 데이터가 저장됩니다.
+        data = crawling(1) / db.session.add(data) / db.session.commit() --> 이렇게하면 1과 NULL (빈값) 이 저장됩니다.
+        data = crawling(FromSaupjaRegNo = '사업장번호') / db.session.add(data) / db.session.commit() -->이렇게하면 직접적으로 데이터를 넣을 수 있습니다. 저장데이터 : (NULL, '사업장번호')
+
+4-4. delete 문법 및 예제
+    조건식으로 데이터 가져와 해당 데이터 삭제. (조건없이 query.all()하고 삭제시 전체 데이터 삭제)
+    [변수] = [테이블명].query.filter([조건]).first() 또는 .all()
+    db.session.delete([변수])
+    db.session.commit()
+    
+    ※ 테이블 이름이 crawling이고 컬럼이 TransSeq와 FromSaupjaRegNo 있다는 가정하에 진행하겠습니다.
+    ※ crawling 테이블에 TransSeq = 1 이고 FromSaupjaRegNo = 10이라는 하나의 데이터가 존재한다고 가정합니다.
+    data = crawling.query.all()
+    db.session.delete(data)
+    db.session.commit()
+
+4-5. update문 예제 
+    ※ 테이블 이름이 crawling이고 컬럼이 TransSeq와 FromSaupjaRegNo 있다는 가정하에 진행하겠습니다.
+    ※ crawling 테이블에 TransSeq = 1 이고 FromSaupjaRegNo = 10이라는 하나의 데이터가 존재한다고 가정합니다.
+    ex) data = crawling.query.first() --> data란 변수에 위 1과 10이란 값이 들어있는 crawling테이블의 데이터가 들어갑니다. 예를들면 {TransSeq:1,FromSaupjaRegNo:10}
+        data.TransSeq = 5 --> data는 crawling이란 테이블의 데이터이기 때문에 TransSeq로 접근이 가능합니다.
+        db.session.commit() --> 새로 추가하거나 삭제하는것이 없기에 바로 commit()을 실행해주면 적용됩니다. {TransSeq:5,FromSaupjaRegNo:5}
+    
+5. 각종 모듈에 대한 설명
+
+5-1. jinja2란
+    우선 jinja2는 Python에서 가장 많이 쓰이는 *템플릿 엔진 중 하나입니다.
+    * 템플릿 엔진이란 서버에서 받아온 데이터를 효과적으로 보여줄 중간매체를 말합니다.
+    
+    jinja2의 기본 문법
+    
+    ● {{ ... }} --> 변수나 표현식
+    ex) 변수의 예시
+        {% for head in data %}
+        <th> {{head}} </th>
+        {% endfor %}
+        
+    ● {% ... %} --> if 나 for 같은 제어문
+    마지막에 html문 처럼 for문을 열면 endfor로 if문을 열면 endif로 제어문을 종료해줘야합니다.
+    ex) {% for i in range(body|length) %}
+             <tr>
+                  ...
+                  {% if i == 1 %}
+                      ...
+                  {% else 또는 elif <조건문> %}
+                      ...
+                  {% endif %}
+             </tr>
+         {% endfor %}
+     
+     이외의 jinja2 내용은 필요시 추가하도록 하겠습니다. 참고: https://ddaaadd.tistory.com/276
+
+5-2. render_template
+    render_template으로 넘긴 html을 화면에 나타내주는 모듈입니다.
+    python 함수의 마지막에 return render_template ('[html], [변수]=[html로 보낼 데이터],...)로 사용가능
+    ex) return render_template('academy.html', one=one_data, two=two_data, log_getdata=log_getdata,log_id=log_id,logo=logo)
+    
+5-3. url_for
+    url_for으로 다른 route, 즉 다른 url 경로에 있는 함수로 이동 할 수 있습니다.
+    return redirect(url_for('[함수명]')
+    ex) def index(): [코드] 라는 함수가 있다고 가정하에 진행하겠습니다.
+        def login():
+            [코드]
+            return redirect(url_for('index')) --> login의 내용도 실행하며 index로 이동하여 index의 내용도 실행합니다.
+이 외에도 필요한 쿼리문 또는 문법이 있을경우 카카오톡으로 물어보면 추가 및 수정 조치하겠습니다.
+
+
+
+
+
+
+
+
+
