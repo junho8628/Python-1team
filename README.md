@@ -1,6 +1,14 @@
 # 파이썬 경진대회 1팀
 > 파이썬 경진대회 1팀입니다. 모르는게 있으면 질문하도록 합시다
 
+@app.route("/")
+def index():
+    all_data=saup.query.all()
+    return render_template("list.html",all_data=all_data)
+  
+if __name__=="__main__":
+    app.run(debug=True)
+
 
 python selenium을 잘 다루도록 노력합니다
 
