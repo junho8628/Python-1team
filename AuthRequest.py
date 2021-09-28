@@ -9,7 +9,7 @@ import os, sys, re, time, random, string, pymysql, sqlalchemy, json, requests
 # from requests.api import request
 from selenium import webdriver
 from SingleModule import kakao_template # 카카오 템플릿 메시지 전송 python
-
+from SingleModule import homtax as HT
 
 app = Flask(__name__)
 app.secret_key = "Secret Key"
@@ -33,7 +33,100 @@ class kakaoUser(db.Model): # DB 테이블
         self.RefreshToken = RefreshToken
         self.uuid = uuid
 
+class tblErpTaxBillTrans(db.Model):
+    __tablename__="tblErpTaxBillTrans"
+    TransSeq=db.Column(db.Integer,primary_key = True)
+    FromSaupjaRegN=db.Column(db.String(20))
+    FromSaupjangNo=db.Column(db.String(10))
+    FromSaupjaName=db.Column(db.String(30))
+    FromDaepyoNam=db.Column(db.String(30))
+    FromSaupjangAd=db.Column(db.String(100))
+    FromUptae=db.Column(db.String(30))
+    FromJongmok=db.Column(db.String(30))
+    FromEmailAddr1=db.Column(db.String(100))
+    ToSaupjaRegNo=db.Column(db.String(20))
+    ToSaupjangNo=db.Column(db.String(10))
+    ToSaupjaName=db.Column(db.String(30))
+    ToDaepyoName=db.Column(db.String(30))
+    ToSaupjangAddr=db.Column(db.String(100))
+    ToUptae=db.Column(db.String(30))
+    ToJongmok=db.Column(db.String(30))
+    ToEmailAddr1=db.Column(db.String(100))
+    ToEmailAddr2=db.Column(db.String(100))
+    HomeTaxApprNo=db.Column(db.String(40))
+    RegDate=db.Column(db.String(10))
+    AmtUnc=db.Column(db.String(13))
+    AmtTax=db.Column(db.String(13))
+    EditSayoo=db.Column(db.String(40))
+    AmtTot=db.Column(db.String(13))
+    AmtCash=db.Column(db.String(13))
+    AmtSupyo=db.Column(db.String(13))
+    AmtUEum=db.Column(db.String(13))
+    AmtMisu=db.Column(db.String(13))
+    GubunRequPay=db.Column(db.String(4))
+    FlowProcYN=db.Column(db.String(1))
+    SyncIndex=db.Column(db.String(20))
+    CorpCode=db.Column(db.String(6))
+    def __init__(self,TransSeq,FromSaupjaRegN,FromSaupjangNo,FromSaupjaName,FromDaepyoNam,FromSaupjangAd,FromUptae,FromJongmok,FromEmailAddr1,ToSaupjaRegNo,ToSaupjangNo,ToSaupjaName,ToDaepyoName,ToSaupjangAddr,ToUptae,ToJongmok,ToEmailAddr1,ToEmailAddr2,HomeTaxApprNo,RegDate,AmtUnc,AmtTax,EditSayoo,AmtTot,AmtCash,AmtSupyo,AmtUEum,AmtMisu,GubunRequPay,FlowProcYN,SyncIndex,CorpCode):
+        self.TransSeq=TransSeq
+        self.FromSaupjaRegN=FromSaupjaRegN
+        self.FromSaupjangNo=FromSaupjangNo
+        self.FromSaupjaName=FromSaupjaName
+        self.FromDaepyoNam=FromDaepyoNam
+        self.FromSaupjangAd=FromSaupjangAd
+        self.FromUptae=FromUptae
+        self.FromJongmok=FromJongmok
+        self.FromEmailAddr1=FromEmailAddr1
+        self.ToSaupjaRegNo=ToSaupjaRegNo
+        self.ToSaupjangNo=ToSaupjangNo
+        self.ToSaupjaName=ToSaupjaName
+        self.ToDaepyoName=ToDaepyoName
+        self.ToSaupjangAddr=ToSaupjangAddr
+        self.ToUptae=ToUptae
+        self.ToJongmok=ToJongmok
+        self.ToEmailAddr1=ToEmailAddr1
+        self.ToEmailAddr2=ToEmailAddr2
+        self.HomeTaxApprNo=HomeTaxApprNo
+        self.RegDate=RegDate
+        self.AmtUnc=AmtUnc
+        self.AmtTax=AmtTax
+        self.EditSayoo=EditSayoo
+        self.AmtTot=AmtTot
+        self.AmtCash=AmtCash
+        self.AmtSupyo=AmtSupyo
+        self.AmtUEum=AmtUEum
+        self.AmtMisu=AmtMisu
+        self.GubunRequPay=GubunRequPay
+        self.FlowProcYN=FlowProcYN
+        self.SyncIndex=SyncIndex
+        self.CorpCode=CorpCode
 
+class tblErpTaxBillTransitem(db.Model):
+    __tablename__="tblErpTaxBillTransitem"
+    TransSeq=db.Column(db.Integer,primary_key = True)
+    ItemNo=db.Column(db.Integer)
+    Mm=db.Column(db.String(2))
+    Dd=db.Column(db.String(2))
+    Pummok=db.Column(db.String(200))
+    Spec=db.Column(db.String(20))
+    Cnt=db.Column(db.String(50))
+    Unc=db.Column(db.String(50))
+    Amt=db.Column(db.String(50))
+    Tax=db.Column(db.String(50))
+    Bogo=db.Column(db.String(200))
+    def __init__(self,TransSeq,ItemNo,Mm,Dd,Pummok,Spec,Cnt,Unc,Amt,Tax,Bogo):
+        self.TransSeq=TransSeq
+        self.ItemNo=ItemNo
+        self.Mm=Mm
+        self.Dd=Dd
+        self.Pummok=Pummok
+        self.Spec=Spec
+        self.Cnt=Cnt
+        self.Unc=Unc
+        self.Amt=Amt
+        self.Tax=Tax
+        self.Bogo=Bogo
+        
 @app.route("/") #기본화면
 def index():
     all_data = kakaoUser.query.all()
@@ -195,7 +288,17 @@ def clickmsg():
 
     return 'ok'
 
+#------------------------------
+# 아직 개발중
+@app.route("/hometaxCrawling")
+def hometax():
+    try :
+        HT.homtax_crawling()
+        return redirect("/")
+    except:
+        return redirect("/")
+    
+#------------------------------
 
 if __name__=="__main__":
     app.run(debug=True)
-    from .SingleModule import kakao_template
