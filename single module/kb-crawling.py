@@ -8,10 +8,11 @@ from datetime import datetime
 from sqlalchemy import func
 from sqlalchemy.sql.elements import Null
 from werkzeug.utils import secure_filename
-import os, sys, re, numpy,pyautogui
+import os, sys, re, pyautogui
 import random, string
 import pymysql
 import sqlalchemy 
+import numpy as np
 from itertools import groupby
 
 
@@ -100,11 +101,13 @@ from selenium.webdriver.common.action_chains import ActionChains
 #         self.OrgnCollNo=OrgnCollNo
 #         self.ErpProjectCode=ErpProjectCode
 
-options=webdriver.ChromeOptions()
+
 # options.add_argument('headless')
-options.add_argument('window-size=1920x1080') 
 # options.add_argument("disable-gpu")
 # options.add_argument("user-data-dir=C:\\environments\\selenium")
+options=webdriver.ChromeOptions()
+options.add_argument('window-size=1920x1080') 
+
 driver = webdriver.Chrome('chromedriver.exe', options=options) #또는 chromedriver.exe
 driver.maximize_window()
 actions = webdriver.ActionChains(driver)
@@ -148,7 +151,7 @@ time.sleep(1)
 
 
 keypad1 = [
-    ["`","1","2","3","4","5","6","7","8","9","0","-","=","뒤로가기"],
+    ["`","1","2","3","4","5","6","7","8","9","0","-","=","backsapce"],
     ["재배열","q","w","e","r","t","y","u","i","o","p","[","]","/"],
     ["caps lock","a","s","d","f","g","h","j","k","l",";","'","입력완료"],
     ["shift","z","x","c","v","b","n","m",",",".","/","닫기"]]
@@ -182,29 +185,37 @@ keypad('2',keypad2_virtual)
 print(keypad1_virtual)
 print(keypad2_virtual)
 
-driver.find_element_by_class_name(keypad1_virtual[3][0]).click() # shift
-time.sleep(0.5)
-driver.find_element_by_class_name(keypad2_virtual[0][2]).click() # @
-time.sleep(0.5)
-driver.find_element_by_class_name(keypad1_virtual[3][0]).click()# shift
-time.sleep(0.5)
-driver.find_element_by_class_name(keypad2_virtual[0][3]).click()# #
-time.sleep(0.5)
-driver.find_element_by_class_name(keypad1_virtual[3][1]).click()# z
-time.sleep(0.5)
-driver.find_element_by_class_name(keypad1_virtual[1][8]).click()# i
-time.sleep(0.5)
-driver.find_element_by_class_name(keypad1_virtual[1][9]).click()# o
-time.sleep(0.5)
-driver.find_element_by_class_name(keypad1_virtual[1][7]).click()# u
-time.sleep(0.5)
-driver.find_element_by_class_name(keypad1_virtual[0][10]).click()# 0
-time.sleep(0.5)
-driver.find_element_by_class_name(keypad1_virtual[0][5]).click()# 5
-time.sleep(0.5)
-driver.find_element_by_class_name(keypad1_virtual[0][2]).click()# 2
-time.sleep(0.5)
-driver.find_element_by_class_name(keypad1_virtual[0][3]).click()# 3
-time.sleep(0.5)
-driver.find_element_by_class_name(keypad1_virtual[2][12]).click()# 완료
-time.sleep(0.5)
+a = np.array(keypad1_virtual, np.string_)
+b = np.array(keypad1 , np.string_)
+print (a)
+print (b)
+aindex = np.where(b == 'z')
+print(aindex)
+
+
+# driver.find_element_by_class_name(keypad1_virtual[3][0]).click() # shift
+# time.sleep(0.5)
+# driver.find_element_by_class_name(keypad2_virtual[0][2]).click() # @
+# time.sleep(0.5)
+# driver.find_element_by_class_name(keypad1_virtual[3][0]).click()# shift
+# time.sleep(0.5)
+# driver.find_element_by_class_name(keypad2_virtual[0][3]).click()# #
+# time.sleep(0.5)
+# driver.find_element_by_class_name(keypad1_virtual[3][1]).click()# z
+# time.sleep(0.5)
+# driver.find_element_by_class_name(keypad1_virtual[1][8]).click()# i
+# time.sleep(0.5)
+# driver.find_element_by_class_name(keypad1_virtual[1][9]).click()# o
+# time.sleep(0.5)
+# driver.find_element_by_class_name(keypad1_virtual[1][7]).click()# u
+# time.sleep(0.5)
+# driver.find_element_by_class_name(keypad1_virtual[0][10]).click()# 0
+# time.sleep(0.5)
+# driver.find_element_by_class_name(keypad1_virtual[0][5]).click()# 5
+# time.sleep(0.5)
+# driver.find_element_by_class_name(keypad1_virtual[0][2]).click()# 2
+# time.sleep(0.5)
+# driver.find_element_by_class_name(keypad1_virtual[0][3]).click()# 3
+# time.sleep(0.5)
+# driver.find_element_by_class_name(keypad1_virtual[2][12]).click()# 완료
+# time.sleep(0.5)
