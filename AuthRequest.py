@@ -3,13 +3,13 @@ from urllib.parse import DefragResult
 from flask import Flask, render_template, request,redirect, url_for, flash,jsonify, send_file, session,escape
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import and_,text,update
-from datetime import datetime
 from sqlalchemy.sql.elements import Null
 import os, sys, re, time, random, string, pymysql, sqlalchemy, json, requests
 # from requests.api import request
 from selenium import webdriver
+
 from SingleModule import kakao_template # 카카오 템플릿 메시지 전송 python
-from SingleModule import homtax as HT
+# from SingleModule import homtax as HT # 홈텍스 크롤링 python
 
 app = Flask(__name__)
 app.secret_key = "Secret Key"
@@ -134,48 +134,20 @@ def index():
 
 @app.route("/KakaoAccept") #카카오 메세지 동의 버튼 클릭
 def Accept():
-    login_url = "https://kauth.kakao.com/oauth/authorize?client_id="+client_id+"&redirect_uri=https://example.com/oauth&response_type=code&scope=talk_message,friends"
-
-    driver = webdriver.Chrome('../chromedriver.exe') #또는 chromedriver.exe
-    driver.maximize_window() # 전체화면
-    driver.implicitly_wait(15) # 묵시적 대기, 활성화를 최대 15초가지 기다린다.
-    driver.get(login_url)
-
-    while 1 : # 무한반복하며 5초마다 현재 url 인식
-        current_url = driver.current_url
-        if "?code=" in current_url : # 현재 url에 ?code=이 포함되있으면 break
-            break
-        time.sleep(5)
-    
-    driver.quit() # 창 닫음
-
     return render_template("Accept.html",client_id=client_id)
 
-@app.route('/UpdateRefreshKey') # 두달에 한번 RefreshKey값 재발급
-def RefreshUpdate():
-    login_url = "https://kauth.kakao.com/oauth/authorize?client_id="+client_id+"&redirect_uri=https://example.com/oauth&response_type=code&scope=talk_message,friends"
+@app.route('/oauth',methods=['GET','POST'])
+def getAccept():
+    parameter = request.args.get('code') #authorization_code
+    print(parameter)
 
-    driver = webdriver.Chrome('../chromedriver.exe') #또는 chromedriver.exe
-    driver.maximize_window() # 전체화면
-    driver.implicitly_wait(15) # 묵시적 대기, 활성화를 최대 15초가지 기다린다.
-    driver.get(login_url)
-
-    while 1 : # 무한반복하며 5초마다 현재 url 인식
-        current_url = driver.current_url
-        if "?code=" in current_url : # 현재 url에 ?code=이 포함되있으면 break
-            break
-        time.sleep(5)
-    driver.quit() # 창 닫음
-
-    current_url = current_url.split('=') # authorization_code 추출
-    authorization_code = current_url[1]
 
     Token_url = "https://kauth.kakao.com/oauth/token" # 액세스 토큰 + 리프레쉬토큰 URL
     data = {
         "grant_type" : "authorization_code",
         "client_id" : client_id,
         "redirect_url" : "https://localhost:3000",
-        "code" : authorization_code
+        "code" : parameter
     }
     response = requests.post(Token_url, data=data)
     tokens = response.json()
@@ -183,8 +155,11 @@ def RefreshUpdate():
 
     with open("kakao_code.json", "w") as fp: # 액세스토큰 + 리프레쉬토큰 등 json 저장
         json.dump(tokens, fp)
-
     return redirect("/")
+
+@app.route('/UpdateRefreshKey') # 두달에 한번 RefreshKey값 재발급
+def RefreshUpdate():
+    return redirect("https://kauth.kakao.com/oauth/authorize?client_id="+client_id+"&redirect_uri=https://example.com/oauth&response_type=code&scope=talk_message,friends")
 
 @app.route('/UpdateAccessToken') # 12시간마다 Access토근 갱신
 def ReAccessToken():
@@ -288,9 +263,11 @@ def clickmsg():
 
     return 'ok'
 
+
+
 #------------------------------
 # 아직 개발중
-@app.route("/hometaxCrawling")
+@app.route("/hometaxCrawling") #홈택스 크롤링
 def hometax():
     try :
         HT.homtax_crawling()
@@ -301,4 +278,4 @@ def hometax():
 #------------------------------
 
 if __name__=="__main__":
-    app.run(debug=True)
+    app.run(port=3000,debug=True)
