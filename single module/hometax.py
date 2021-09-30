@@ -129,6 +129,7 @@ from selenium.webdriver.common.by import By
 #         self.Bogo=Bogo
 
 def reply():
+    print('reply')
     new_data = ''
     for i in range(3,13): # 3~12
         time.sleep(2)
@@ -259,15 +260,35 @@ def reply():
             # 닫기 버튼을 눌렀을때 나오는 화면의 iframe에 다시 접속
             element = driver.find_element_by_id("txppIframe")
             driver.switch_to.frame(element)
+            
+
+
+def repeat(divide): # 페이지 번호 제어 
+    print('repeat')
+    for i in range(1,divide): # 페이지 넘김 번호 
+        reply() # 위에 선언한 함수 실행
+        # 위에서 return으로 함수 나올때 이곳에서 다시 시작 break는 for문 하나를 나가는 것이고 return 은 reply 함수 자체를 나가기 때문에 두개를 잘 구분
+        time.sleep(2)
+        try:
+            # 10페이지까지 완료한 상태에서 화살표 클릭 하고 난후 바로 위에있는 reply 함수 재진입
+            leftbtn=driver.find_element_by_xpath('/html/body/div[1]/div[4]/div[3]/div[7]/div/div/div[1]/ul/li[13]')
+            leftbtn.click()
+        except:
+            # 더이상의 화살표가 없으면 끝난것으로 확인후 break로 for문 탈출
+            print('done!')
+            break
+    # chrome 종료
+    driver.quit()
 
 def homtax_crawling():
+    print('homtax_crawling')
     options=webdriver.ChromeOptions()
     # options.add_argument('headless') #headless 설정시 크롬창은 열리지 않지만 백그라운드로 실행
     options.add_argument('window-size=1920x1080') 
     options.add_argument("disable-gpu") #그래픽카드 가속 사용안함
     options.add_argument("user-data-dir=C:\\environments\\selenium")
     # chrome 드라이버 chrome 버전에 맞게 다운후 위치변경
-    driver = webdriver.Chrome('chromedriver.exe', options=options) #또는 chromedriver.exe 각자 (경로)/chromedriver.exe하면 됌
+    driver = webdriver.Chrome('C:/Users/user/OneDrive/바탕 화면/새 폴더/kakaoProject/SingleModule/chromedriver.exe', options=options) #또는 chromedriver.exe 각자 (경로)/chromedriver.exe하면 됌
     driver.maximize_window() #전체화면으로 실행
     driver.implicitly_wait(15) # 묵시적 대기, 활성화를 최대 15초가지 기다린다.
 
@@ -373,24 +394,13 @@ def homtax_crawling():
     number=driver.find_element_by_xpath('/html/body/div[1]/div[4]/div[3]/div[7]/div/div/div[2]/p/span[7]') #페이지 (쪽) 수 가져오기
     divide=int(number.text)//10+2
 
+    repeat(divide)
 # 반복작업을 하기위해 함수 선언 처음에는 여기가 아닌 아래쪽에서 시작 418번줄 for문부터 시작 
 
-            
+
+
 # 여기서부터 시작
-    for i in range(1,divide): # 페이지 넘김 번호 
-        reply() # 위에 선언한 함수 실행
-        # 위에서 return으로 함수 나올때 이곳에서 다시 시작 break는 for문 하나를 나가는 것이고 return 은 reply 함수 자체를 나가기 때문에 두개를 잘 구분
-        time.sleep(2)
-        try:
-            # 10페이지까지 완료한 상태에서 화살표 클릭 하고 난후 바로 위에있는 reply 함수 재진입
-            leftbtn=driver.find_element_by_xpath('/html/body/div[1]/div[4]/div[3]/div[7]/div/div/div[1]/ul/li[13]')
-            leftbtn.click()
-        except:
-            # 더이상의 화살표가 없으면 끝난것으로 확인후 break로 for문 탈출
-            print('done!')
-            break
-    # chrome 종료
-    driver.quit()
+
 
 # if __name__=="__main__":
 #     app.run(debug=True)
