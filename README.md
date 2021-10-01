@@ -84,6 +84,12 @@ create table tblErpTaxBillTransitem (
     Amt text,
     Tax text,
     Bogo text);
+    
+CREATE TABLE kakaoUser (
+    UserName text,
+    Token text, 
+    RefreshToken text, 
+    uuid text primary key);
 ```
 
 ## 정보
