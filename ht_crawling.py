@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# 홈택스 크롤링 코드
 from urllib.parse import DefragResult
 from flask import Flask, render_template, request,redirect, url_for, flash,jsonify, send_file, session,escape
 from flask_sqlalchemy import SQLAlchemy
