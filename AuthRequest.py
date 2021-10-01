@@ -9,7 +9,7 @@ import os, sys, re, time, random, string, pymysql, sqlalchemy, json, requests
 from selenium import webdriver
 
 from SingleModule import kakao_template # 카카오 템플릿 메시지 전송 python
-# from SingleModule import homtax as HT # 홈텍스 크롤링 python
+from SingleModule import hometax as HT # 홈텍스 크롤링 python
 
 app = Flask(__name__)
 app.secret_key = "Secret Key"
@@ -24,12 +24,12 @@ db = SQLAlchemy(app)
 class kakaoUser(db.Model): # DB 테이블
     __tablename__ = "kakaoUser"
     UserName = db.Column(db.String(20))
-    ToKen = db.Column(db.String(200))
+    Token = db.Column(db.String(200))
     RefreshToken = db.Column(db.String(200))
     uuid = db.Column(db.String(200),primary_key=True)
-    def __init__(self, UserName, ToKen, RefreshToken, uuid) :
+    def __init__(self, UserName, Token, RefreshToken, uuid) :
         self.UserName = UserName
-        self.ToKen = ToKen
+        self.Token = Token
         self.RefreshToken = RefreshToken
         self.uuid = uuid
 
@@ -271,10 +271,9 @@ def clickmsg():
 def hometax():
     try :
         HT.homtax_crawling()
-        return redirect("/")
     except:
-        return redirect("/")
-    
+        pass
+    return redirect("/")
 #------------------------------
 
 if __name__=="__main__":
