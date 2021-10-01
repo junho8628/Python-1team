@@ -20,7 +20,7 @@ headers={
 data={
     "template_object": json.dumps({
         "object_type":"text",
-        "text":"gg",
+        "text":"hello, kakao API",
         "link":{
             "web_url":"www.naver.com"
         }
