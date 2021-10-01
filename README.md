@@ -38,6 +38,7 @@ pip install Flask-SQLAlchemy
 ./sqlite3 [DB이름].db
 
 # db 생성 후 create
+# 홈택스 DB 1
 create table tblErpTaxBillTrans (
    TransSeq int primary key,
    FromSaupjaRegN text,
@@ -72,6 +73,7 @@ create table tblErpTaxBillTrans (
    SyncIndex text,
    CorpCode text);
    
+# 홈택스 DB 2번
 create table tblErpTaxBillTransitem (
     TransSeq int primary key,
     ItemNo int,
@@ -85,6 +87,7 @@ create table tblErpTaxBillTransitem (
     Tax text,
     Bogo text);
     
+# kakaoDB
 CREATE TABLE kakaoUser (
     UserName text,
     Token text, 
