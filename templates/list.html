@@ -43,122 +43,146 @@
 	<div class="mx-auto col-sm-8 main-section" id="myTab" role="tablist">
 		<ul class="nav nav-tabs justify-content-end">
 			<li class="nav-item">
-			<a class="nav-link active" id="list-tab" data-toggle="tab" href="#list" role="tab" aria-controls="list" aria-selected="false">List</a>
+				<a class="nav-link active" id="list-tab" data-toggle="tab" href="#list" role="tab" aria-controls="list" aria-selected="false">List</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" id="list-tab-me" data-toggle="tab" href="#SendMe" role="tab" aria-controls="list" aria-selected="false">Me</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" id="list-tab-friend" data-toggle="tab" href="#SendFriend" role="tab" aria-controls="list" aria-selected="false">Friend</a>
 			</li>
 		</ul>
+
 		<div class="tab-content" id="myTabContent">
 			<div class="tab-pane fade show active" id="list" role="tabpanel" aria-labelledby="list-tab">
 				<div class="card">
 					<div class="card-header">
-						<h4>Roster</h4>
+						<h4>친구 목록</h4>
+						<button style="float:right;">
+							<a href="/hometaxCrawling" style="text-decoration: none; color: black;">국세청 크롤링 (개발중)</a>
+						</button>
+						<button style="float:right;">
+							<a href="/UpdateAccessToken" style="text-decoration: none; color: black;">Access_Token 갱신</a>
+						</button>
+						<button style="float:right;">
+							<a href="/UpdateRefreshKey" style="text-decoration: none; color: black;">Refresh_Token 갱신</a>
+						</button>
+						<button style="float:right;">
+							<a href="/listUpdate" style="text-decoration: none; color: black;">친구 목록 갱신</a>
+						</button>
+						<button style="float:right;">
+							<a onclick='getCheckboxValue()'>선택한 친구에게 보내기</a>
+						</button>
+						<button style="float:right;">
+							<a href="/KakaoAccept" style="text-decoration: none; color: black;">카카오 메세지 수신 동의하기</a>
+						</button>
 					</div>
 					<div class="card-body">
 						<div class="table-responsive" style="overflow: auto;">
 							<table id="userList" class="table table-bordered table-hover table-striped" style="white-space: nowrap;">
 								<thead class="thead-light">
-								<tr>
-									<th scope="col">TransSeq</th>
-									<th scope="col">FromSaupjaRegN</th>
-									<th scope="col">FromSaupjangNo</th>
-									<th scope="col">FromSaupjaName</th>
-									<th scope="col">FromDaepyoNam</th>
-                                    <th scope="col">FromSaupjangAd</th>
-                                    <th scope="col">FromUptae</th>
-                                    <th scope="col">FromJongmok</th>
-                                    <th scope="col">FromEmailAddr1</th>
-                                    <th scope="col">ToSaupjaRegNo</th>
-									<th scope="col">ToSaupjangNo</th>
-									<th scope="col">ToSaupjaName</th>
-									<th scope="col">ToDaepyoName</th>
-									<th scope="col">ToSaupjangAddr</th>
-                                    <th scope="col">ToUptae</th>
-                                    <th scope="col">ToEmailAddr1</th>
-                                    <th scope="col">ToEmailAddr2</th>
-                                    <th scope="col">HomeTaxApprNo</th>
-                                    <th scope="col">RegDate</th>
-									<th scope="col">AmtUnc</th>
-									<th scope="col">AmtTax</th>
-									<th scope="col">EditSayoo</th>
-									<th scope="col">AmtTot</th>
-                                    <th scope="col">AmtCash</th>
-                                    <th scope="col">AmtSupyo</th>
-                                    <th scope="col">AmtUEum</th>
-                                    <th scope="col">AmtMisu</th>
-                                    <th scope="col">GubunRequPay</th>
-                                    <th scope="col">FlowProcYN</th>
-                                    <th scope="col">SyncIndex</th>
-                                    <th scope="col">CorpCode</th>
-									<th></th>
-								</tr>
-								</thead>
-								<tbody>
-									{% for i in all_data%}
-										<tr>
-											<td scope="row">{{i.TransSeq}}</td>
-                                            <td>{{i.FromSaupjaRegN}}</td>
-											<td>{{i.FromSaupjangNo}}</td>
-											<td>{{i.FromSaupjaName}}</td>
-											<td>{{i.FromDaepyoNam}}</td>
-											<td>{{i.FromSaupjangAd}}</td>
-											<td>{{i.FromUptae}}</td>
-											<td>{{i.FromJongmok}}</td>
-											<td>{{i.FromEmailAddr1}}</td>
-											<td>{{i.ToSaupjaRegNo}}</td>
-											<td>{{i.ToSaupjangNo}}</td>
-											<td>{{i.ToSaupjaName}}</td>
-											<td>{{i.ToDaepyoName}}</td>
-											<td>{{i.ToSaupjangAddr}}</td>
-											<td>{{i.ToUptae}}</td>
-											<td>{{i.ToEmailAddr1}}</td>
-											<td>{{i.ToEmailAddr2}}</td>
-											<td>{{i.HomeTaxApprNo}}</td>
-											<td>{{i.RegDate}}</td>
-											<td>{{i.AmtUnc}}</td>
-											<td>{{i.AmtTax}}</td>
-											<td>{{i.EditSayoo}}</td>
-											<td>{{i.AmtTot}}</td>
-											<td>{{i.AmtCash}}</td>
-											<td>{{i.AmtSupyo}}</td>
-											<td>{{i.AmtUEum}}</td>
-											<td>{{i.AmtMisu}}</td>
-											<td>{{i.GubunRequPay}}</td>
-											<td>{{i.FlowProcYN}}</td>
-											<td>{{i.SyncIndex}}</td>
-											<td>{{i.CorpCode}}</td>
-                                            
-											<td>
+									<tr>
+									   <th scope="col">checkbox</th>
+									   <th scope="col">UserName</th>
+									   <th scope="col">Token</th>
+									   <th scope="col">RefreshToken</th>
+									   <th scope="col">uuid</th>
+									   <!-- <th></th> -->
+									</tr>
+									</thead>
+									<tbody>
+									   {% for i in all_data%}
+										  <tr>
+											 <td><input type='checkbox'name='check_value' value='{{i.uuid}}'/></td>
+											 <td scope="row">{{i.UserName}}</td>
+											 <td>{{i.Token}}</td>
+											 <td>{{i.RefreshToken}}</td>
+											 <td>{{i.uuid}}</td>
+											 <!-- <td>
 												<a href="#" onclick="fEdit('{{i.idx}}','r{{i.FirstName}}','{{i.LastName}}','{{i.UserName}}','{{i.Email}}')"><i class="fas fa-edit"></i></a> | <a style="cursor: pointer;"id ="delete" onclick="fDel('{{i.idx}}')"><i class="fas fa-user-times"></i></a>
-											</td>
-										</tr>
-									{%endfor%}
-								</tbody>
+											 </td> -->
+										  </tr>
+									   {%endfor%}
+									</tbody>
 							</table>
 						</div>
 
 					</div>
 				</div>
 			</div>
-			
-		
+			<!-- -------------------------------------------------------------------------- -->
+			<!-- 나에게 보내기  -->
+			<div class="tab-pane fade" id="SendMe" role="tabpanel" aria-labelledby="list-tab-me">
+				<div class="card">
+					<div class="card-header">
+						<h4>나에게 보내기</h4>
+					</div>
+					<div class="card-body">
+						<div class="table-responsive" style="overflow: auto;">
+							<form action="/SendMe" method="POST">
+								<p>전송할 내용을 입력하세요.</p>
+								<textarea name = "Content" cols="50" rows="3" placeholder="내용을 입력하세요"></textarea>
+								<input type="submit">
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- --------------------------------------------------------- -->
+			<!-- 친구에게 보내기 -->
+			<div class="tab-pane fade" id="SendFriend" role="tabpanel" aria-labelledby="list-tab-friend">
+				<div class="card">
+					<div class="card-header">
+						<h4>친구에게 보내기</h4>
+					</div>
+					<div class="card-body">
+						<div class="table-responsive" style="overflow: auto;">
+							<form action="/SendFriend" method="POST">
+								보낼사람 : <input type="text" name="SendUser" list="depList"><br>
+								<p>전송할 내용을 입력하세요.</p>
+								<textarea name = "Content" cols="50" rows="3" placeholder="내용을 입력하세요"></textarea>
+								<datalist id="depList">
+									{% for i in all_data%}
+										<option value={{i.UserName}}></option>
+									{%endfor%}
+								</datalist>
+								<input type="submit">
+							</form>
+						</div>
+
+					</div>
+				</div>
+			</div>
 			
 		</div>
 	</div>
 </div>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+{%with messages = get_flashed_messages()%}
+{%if messages %}
+  <script type="text/javascript">
+	alert("{{messages[-1]}}");
+  </script>
+  {%endif%}
+{%endwith%}
 <script>
-	// function fDel(uid){
-	// 	if (confirm(uid+"를 정말로 삭제하시겠습니까?")==false) return;
-	// 	location.href = "/delete/"+uid;
-	// }
+	function getCheckboxValue()  {
+		// 선택된 목록 가져오기
+		var listArray=[]
 
-	// function fEdit(idx,FirstName,LastName,UserName,Email){
-	// 	var frm = document.Edit;
-	// 		frm.idx.value = idx;
-	// 		frm.FirstName.value = FirstName;
-	// 		frm.LastName.value = LastName;
-	// 		frm.UserName.value = UserName;
-	// 		frm.Email.value = Email;
-	// 	document.getElementById('form-Edit-tab').click();
-	// }
+		$('input[name="check_value"]:checked').each(function(i){//체크된 리스트 저장
+			listArray.push($(this).val());
+		});
+		
+		// 출력
+		$.ajax({
+			type:'POST',
+			url:'/click_friend',
+			data : 
+				{'result' : listArray} ,
+			dataType:'JSON'
+		});
+	}
 </script>
 </body>
 </html>
