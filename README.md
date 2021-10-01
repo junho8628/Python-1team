@@ -96,8 +96,24 @@ CREATE TABLE kakaoUser (
 ```
 
 ## 정보
+카카오 톡이 보내지지 않을경우 Access_Token을 갱신해주시기 바랍니다. (유효기간 12시간)   
+Access_Token이 갱신되지 않을경우 refresh_Token을 갱신해주시기 바랍니다. (유효기간 2달)
 
+------------------
+![image](https://user-images.githubusercontent.com/69878816/135555357-9664b575-812d-4081-92cb-87bf0978a437.png)
++ 사용자(결재자,이용자)가 메시지 전송을 동의할때 보낼 url 입니다. 해당 동의를 해야 kakao api로 메시지 전송이 가능합니다.  
 
+![image](https://user-images.githubusercontent.com/69878816/135556704-14ef392e-19b9-4f55-a353-8383a1d49153.png)
++ 사용자 리스트의 체크박스에 선택된 사람에게 결재 메시지를 수동으로 전송할 수 있습니다.
+
+![image](https://user-images.githubusercontent.com/69878816/135556827-4d9ef0a5-15c6-47cb-9e78-a0343e584832.png)
++ 사용자 리스트를 다시 로딩합니다. (새로고침)
+
+![image](https://user-images.githubusercontent.com/69878816/135575870-1ca8f7ec-1d58-43bb-8f17-3ba4d2d6d1c9.png)
++ Refresh Token을 재발급 합니다. (유효기간이 두달이므로 주기적으로 해야합니다.)
+
+![image](https://user-images.githubusercontent.com/69878816/135575976-0ef14a14-b771-4b56-a655-6019e09c6fac.png)
++ Access Token을 재발급 합니다. (유효기간이 12시간이므로 하루에 적어도 한번은 재발급이 필요합니다.)
 ## 카카오 메세지
 
 https://novice-engineers.tistory.com/9?category=908185
