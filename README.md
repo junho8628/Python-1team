@@ -112,7 +112,7 @@ Access_Token이 갱신되지 않을경우 refresh_Token을 갱신해주시기 �
 ![image](https://user-images.githubusercontent.com/69878816/135575870-1ca8f7ec-1d58-43bb-8f17-3ba4d2d6d1c9.png)
 + Refresh Token을 재발급 합니다. (유효기간이 두달이므로 주기적으로 해야합니다.)
 
-![image](https://user-images.githubusercontent.com/69878816/135575976-0ef14a14-b771-4b56-a655-6019e09c6fac.png)
+![image](https://user-images.githubusercontent.com/69878816/135699959-2035d6a7-1e4a-4a59-9481-56f053a67f3e.png)
 + Access Token을 재발급 합니다. (유효기간이 12시간이므로 하루에 적어도 한번은 재발급이 필요합니다.)
 ## 카카오 메세지
 
