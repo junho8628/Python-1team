@@ -124,4 +124,6 @@ https://luckygg.tistory.com/294
 ## 결과화면
 ![image](https://user-images.githubusercontent.com/51261484/135700432-37614279-4031-4957-a864-0f5fdc95d9db.png)
 
+![image](https://user-images.githubusercontent.com/51261484/135700458-f016825b-a56e-4bcf-86a7-0a587545e586.png)
+
 ![image](https://user-images.githubusercontent.com/69878816/135700258-afa28ae4-d720-4332-8256-2122fbf52b06.png)
