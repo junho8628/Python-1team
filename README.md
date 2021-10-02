@@ -122,4 +122,6 @@ https://novice-engineers.tistory.com/9?category=908185
 https://luckygg.tistory.com/294
 
 ## 결과화면
+![image](https://user-images.githubusercontent.com/51261484/135700432-37614279-4031-4957-a864-0f5fdc95d9db.png)
+
 ![image](https://user-images.githubusercontent.com/69878816/135700258-afa28ae4-d720-4332-8256-2122fbf52b06.png)
