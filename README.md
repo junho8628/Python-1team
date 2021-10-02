@@ -126,4 +126,6 @@ https://luckygg.tistory.com/294
 
 ![image](https://user-images.githubusercontent.com/51261484/135700458-f016825b-a56e-4bcf-86a7-0a587545e586.png)
 
+![image](https://user-images.githubusercontent.com/51261484/135700486-2877326a-ae0f-438a-9eeb-be2da1301431.png)
+
 ![image](https://user-images.githubusercontent.com/69878816/135700258-afa28ae4-d720-4332-8256-2122fbf52b06.png)
