@@ -134,7 +134,7 @@ def index():
 
 @app.route("/KakaoAccept") #카카오 메세지 동의 버튼 클릭
 def Accept():
-    return render_template("Accept.html",client_id=client_id)
+    return render_template("AuthRequest_Accept.html",client_id=client_id)
 
 @app.route('/oauth',methods=['GET','POST'])
 def getAccept():
