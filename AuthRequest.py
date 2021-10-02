@@ -130,7 +130,7 @@ class tblErpTaxBillTransitem(db.Model):
 @app.route("/") #기본화면
 def index():
     all_data = kakaoUser.query.all()
-    return render_template("list.html",all_data=all_data)
+    return render_template("SendMessage.html",all_data=all_data)
 
 @app.route("/KakaoAccept") #카카오 메세지 동의 버튼 클릭
 def Accept():
