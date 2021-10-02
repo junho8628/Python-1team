@@ -118,9 +118,5 @@ Access_Token이 갱신되지 않을경우 refresh_Token을 갱신해주시기 �
 
 https://novice-engineers.tistory.com/9?category=908185
 
-## 카카오 쳇봇
+## 카카오 봇
 https://luckygg.tistory.com/294
-
-
-## 개발기간
-
