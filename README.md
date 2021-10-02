@@ -120,3 +120,6 @@ https://novice-engineers.tistory.com/9?category=908185
 
 ## 카카오 봇
 https://luckygg.tistory.com/294
+
+## 결과화면
+![1633139137623](https://user-images.githubusercontent.com/69878816/135700066-7ee7799c-96a6-447d-b49d-a560a9ea72c3.jpg)
