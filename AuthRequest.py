@@ -8,13 +8,13 @@ import os, sys, re, time, random, string, pymysql, sqlalchemy, json, requests
 # from requests.api import request
 from selenium import webdriver
 
-from SingleModule import kakao_template # 카카오 템플릿 메시지 전송 python
-from SingleModule import hometax as HT # 홈텍스 크롤링 python
+from module import kakao_template # 카카오 템플릿 메시지 전송 python
+from module import hometax_crawling as HT # 홈텍스 크롤링 python
 
 app = Flask(__name__)
 app.secret_key = "Secret Key"
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///kakaoAuth.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db//kakaoAuth.db'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 client_id = "8c2972daafdf239a443d7943c89253d9" # REST API 키
