@@ -159,7 +159,7 @@ def getAccept():
 
 @app.route('/UpdateRefreshKey') # 두달에 한번 RefreshKey값 재발급
 def RefreshUpdate():
-    return redirect("https://kauth.kakao.com/oauth/authorize?client_id="+client_id+"&redirect_uri=https://example.com/oauth&response_type=code&scope=talk_message,friends")
+    return redirect("https://kauth.kakao.com/oauth/authorize?client_id="+client_id+"&redirect_uri=http://localhost:3000/oauth&response_type=code&scope=talk_message,friends")
 
 @app.route('/UpdateAccessToken') # 12시간마다 Access토근 갱신
 def ReAccessToken():
