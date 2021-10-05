@@ -325,10 +325,10 @@ def homtax_crawling():
     companyName='지오유'
     if companyName=='지오유':
         findName='(주)지오유(zioyou)0004681103055148'
-        inputPass='!@#ziou1570'
+        inputPass='***********'
     elif companyName=='이가자연면':
         findName='(주)이가자연면_0001588512'
-        inputPass='dlrkaus#357'
+        inputPass='***********'
 
     # companyName의 회사 이름을 바꾸게 되면 findName의 이름도 바뀌는데 인증서가 여러가지일때 해당 인증서를 선택
     driver.find_element_by_css_selector('[title^="'+str(findName)+'"]').click()
